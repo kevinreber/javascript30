@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <form class="search-form">
@@ -14,9 +16,59 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint =
+      'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
+    const searchInput = document.querySelector('.search');
+    const suggestions = document.querySelector('.suggestions');
+    const cities = [];
+
+    fetch(endpoint)
+      .then(res => res.json())
+      .then(data => cities.push(...data))
+      .then(res => console.log(cities));
+
+    function findMatches(wordToMatch, cities) {
+      return cities.filter(place => {
+        //find cities and states that match
+        const regex = new RegExp(wordToMatch, 'gi') //g is global search, i ignores case sensitivity
+        return place.city.match(regex) || place.state.match(regex);
+      });
+    }
+
+function numberWithCommas(x){
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+    function displayMatches() {
+      const matchArray = findMatches(this.value, cities)
+      const html = matchArray.map( place =>{
+        const regex = new RegExp(this.value, 'gi');
+        //add highlight class to matching letters
+        const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+        const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+        return `
+          <li>
+            <span class="name">${cityName}, ${stateName}</span>
+            <span class="state">${numberWithCommas(place.population)}</span>
+          </li>
+        `
+      }).join('');
+
+      console.log(matchArray);
+      suggestions.innerHTML = html;
+    }
+
+    searchInput.addEventListener('keyup', displayMatches);
+
+    // function getCities(res){
+    //   res.forEach((data) =>{
+    //     cities.push(data.city)
+    //   });
+    // }
+    // or use spread operator: cities.push(...data)
+  </script>
 </body>
+
 </html>
