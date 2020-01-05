@@ -17,29 +17,73 @@
       p.style.fontSize = '50px';
     }
 
-    // Regular
+        // Regular
+        console.log('hello');
 
-    // Interpolated
+// Interpolated
+console.log('Hello I am a %s string!', '💩');
 
-    // Styled
+// Styled
+// console.log('%c I am some great text', 'font-size:50px; background:red; text-shadow: 10px 10px 0 blue')
 
-    // warning!
+// warning!
+console.warn('OH NOOO'); //Shows Warning in console
 
-    // Error :|
+// Error :|
+console.error('Shit!'); //Throws an Error in console
 
-    // Info
+// Info
+console.info('Crocodiles eat 3-4 people per year'); //Shows info in console
 
-    // Testing
+// Testing
+const p = document.querySelector('p');
 
-    // clearing
+console.assert(p.classList.contains('ouch'), 'That is wrong!'); //Only throws an Error if wrong
 
-    // Viewing DOM Elements
+// clearing
+console.clear(); //clear console
 
-    // Grouping together
+// Viewing DOM Elements
+console.log(p); //shows only element
+console.dir(p); //shows all properties and methods of element
 
-    // counting
+// Grouping together
+dogs.forEach(dog => {
+  console.groupCollapsed(`${dog.name}`); //start of group
+  console.log(`This is ${dog.name}`);
+  console.log(`${dog.name} is ${dog.age} years old`);
+  console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+  console.groupEnd(`${dog.name}`); //end of group
+});
+// logs as a group
+  // first one for Snickers
+  // second for Hugo 
 
-    // timing
+
+// counting
+console.count('Wes');
+console.count('Wes');
+console.count('Steve');
+console.count('Steve');
+console.count('Wes');
+console.count('Steve');
+console.count('Wes');
+console.count('Steve');
+console.count('Steve');
+console.count('Steve');
+console.count('Steve');
+console.count('Steve'); //logs how many times shown in console
+
+// timing
+console.time('fetching data');
+fetch('https://api.github.com/users/wesbos')
+  .then(data => data.json())
+  .then(data => {
+    console.timeEnd('fetching data');
+    console.log(data);
+  }); //shows how long it takes to complete a task
+
+console.table(dogs); //takes an array of objects and displays it as a table
 
   </script>
 </body>
