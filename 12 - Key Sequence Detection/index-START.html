@@ -7,6 +7,21 @@
 </head>
 <body>
 <script>
+  const pressed = [];
+const secretCode = 'reberfever';
+
+window.addEventListener('keyup', (e) => {
+  console.log(e.key);
+  pressed.push(e.key);
+  //start at end instead of start of array
+  //so latest input gets stored
+  pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+  if (pressed.join('').includes(secretCode)) {
+    console.log('DING DING!');
+    cornify_add();  //sticker pops up
+  }
+  console.log(pressed);
+});
 </script>
 </body>
 </html>
